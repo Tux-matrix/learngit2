@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Class Attendance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <h1>Virtual Class Attendance System</h1>
+    <img src="{{ url_for('video') }}" width="640" height="480">
+    <button id="joinMeeting">Join Meeting</button>
+
+    <script>
+        document.getElementById("joinMeeting").addEventListener("click", async function() {
+            let response = await fetch("/check_recognition");
+            let data = await response.json();
+
+            if (data.status === "success") {
+                alert(data.message);
+                window.location.href = "/join_meeting";
+            } else {
+                alert("Access Denied: Face not recognized.");
+            }
+        });
+    </script>
+</body>
+</html>
